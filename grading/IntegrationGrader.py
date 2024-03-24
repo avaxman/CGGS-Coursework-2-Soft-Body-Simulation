@@ -32,16 +32,16 @@ if __name__ == '__main__':
     scene.integrate_global_velocity()
     scene.integrate_global_position()
 
-    globalVelocitiesFree = scene.globalVelocities
-    globalPositionsFree = scene.globalCurrPositions
+    globalVelocitiesFree = np.copy(scene.globalVelocities)
+    globalPositionsFree = np.copy(scene.globalCurrPositions)
 
     constraints, _ = load_constraint_file(os.path.join('..', 'data', 'cylinder-constraints.txt'), scene)
     scene.localConstraints = constraints
 
     scene.run_timestep(constraints)
 
-    globalVelocitiesConstrained = scene.globalVelocities
-    globalPositionsConstrained = scene.globalCurrPositions
+    globalVelocitiesConstrained = np.copy(scene.globalVelocities)
+    globalPositionsConstrained = np.copy(scene.globalCurrPositions)
 
     print("Free global velocities error: ", np.max(np.abs(globalVelocitiesFree - loaded_data['globalVelocitiesFree'])))
     print("Free global positions error: ", np.max(np.abs(globalPositionsFree - loaded_data['globalPositionsFree'])))
